@@ -1,0 +1,27 @@
+$instance = new Model();
+
+$instance->column_name = <value>;
+
+echo $instance->column_name;
+
+$address = new AddressEntry();
+
+$address->street = '123 Fake st.';
+
+$address->state = 'Tx';
+
+$address->city = 'San Antonio';
+
+$address->zip = ' 78228';
+
+$address->save();
+
+
+
+
+
+
+
+$post = new Post();
+
+$user =
