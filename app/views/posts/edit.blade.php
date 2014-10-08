@@ -3,23 +3,12 @@
 @section('content')
 
 <div>
-	<form method='POST' action="{{{ action('PostsController@store') }}}">
+	{{ Form::model($post, array('action' => 'PostsController@update', $post->id, 'class' => 'form-horizontal', 'method' => 'form-horizontal')) }}
+		@include('posts.form')
 		<div>
-			<label for='title'>Title</label>
+			<button>Edit</button>
 		</div>
-		<div>
-			<input id='title' name='title' type="text" value="{{{ Input::old('title') }}}">
-		</div>
-		<div>
-			<label for='content'>Content</label>
-		</div>
-		<div>
-			<input id='content' name='content' type="text" value="{{{ Input::old('content') }}}">
-		</div>
-		<div>
-			<button>Submit</button>
-		</div>
-	</form>
+	{{ Form::close()}}
 </div>
 
 @stop

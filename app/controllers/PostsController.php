@@ -38,20 +38,7 @@ class PostsController extends \BaseController {
 	public function store()
 	{
 		$post = new Post();
-		$validator = Validator::make(Input::all(),Post::$rules);
-
-		if ($validator->fails()) {
-			return Redirect::back()->withInput()->withErrors($validator);
-		} else {
-			$post = new Post;
-			$post->title = Input::get('title');
-			$post->content = Input::get('content');
-			$post->save();
-			return Redirect::action('PostsController@index');
-		}
-
-
-		//
+		return $this->savePost($post);
 	}
 
 
@@ -91,7 +78,11 @@ class PostsController extends \BaseController {
 	public function update($id)
 	{
 		$post = Post::find($id);
+		return $this->savePost($post);
+	}
 
+	protected function savePost(Post $post)
+	{
 		$validator = Validator::make(Input::all(),Post::$rules);
 
 		if ($validator->fails()) {
@@ -100,13 +91,8 @@ class PostsController extends \BaseController {
 			$post->title = Input::get('title');
 			$post->content = Input::get('content');
 			$post->save();
-			return Redirect::action('PostsController@show');
+			return Redirect::action('PostsController@show',$post->id);
 		}
-	}
-
-	protected function savePost(Post $post)
-	{
-
 	}
 	/**
 	 * Remove the specified resource from storage.
