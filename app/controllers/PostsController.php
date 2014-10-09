@@ -83,12 +83,20 @@ class PostsController extends \BaseController {
 		$validator = Validator::make(Input::all(),Post::$rules);
 
 		if ($validator->fails()) {
-			return Redirect::back()->withInput()->withErrors($validator);
+
+			Session::flash('errorMessage', 'Your post must have a title and content');
+
+			return Redirect::back()->withInput();
+			// ->withErrors($validator));
 		} else {
 			$post->title = Input::get('title');
 			$post->content = Input::get('content');
 			$post->save();
+	
+			$message = 'Post created successfully';
+			Session::flash('successMessage', $message);
 			return Redirect::action('PostsController@show',$post->id);
+
 		}
 	}
 	/**
@@ -99,7 +107,8 @@ class PostsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		return "this method destroys the table";
+		Post::find($id);
+		Post::delete();
 	}
 
 }
