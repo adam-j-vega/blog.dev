@@ -4,13 +4,14 @@
 
 <h1>{{{$post->title}}}</h1>
 <p>{{{$post->content}}}</p>
-
+<small>{{{$post->created_at->format(Post::DATE_FORMAT)}}}</small>
+<br>
 <div>
-	<button><a href="{{{ action('PostsController@edit', $post->id) }}}">Edit</a></button>
+	<a href="{{{ action('PostsController@edit', $post->id) }}}">Edit</a>
 </div>
-
+<br>
 <div>
-	<button><a href="{{{ action('PostsController@index') }}}">Index</a></button>
+	<a href="{{{ action('PostsController@index') }}}">Index</a>
 </div>
 
 @stop

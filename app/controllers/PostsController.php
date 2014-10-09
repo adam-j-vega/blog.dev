@@ -14,7 +14,6 @@ class PostsController extends \BaseController {
 		$posts = Post::paginate(4);
 
 		return View::make('posts.index')->with('posts', $posts);
-		//
 	}
 
 
@@ -26,7 +25,6 @@ class PostsController extends \BaseController {
 	public function create()
 	{
 		return View::make('posts.create');
-		//
 	}
 
 
@@ -53,7 +51,6 @@ class PostsController extends \BaseController {
 	{
 		$post = Post::find($id);
 		return View::make('posts.show')->with('post', $post);
-		//
 	}
 
 	/**
@@ -63,10 +60,10 @@ class PostsController extends \BaseController {
 	 * @return Response
 	 */
 	public function edit($id)
+
 	{
 		$post = Post::find($id);
 		return View::make('posts.edit')->with('post', $post);
-		//
 	}
 
 	/**
@@ -103,7 +100,8 @@ class PostsController extends \BaseController {
 	public function destroy($id)
 	{
 		return "this method destroys the table";
-		//
 	}
 
 }
+
+?>

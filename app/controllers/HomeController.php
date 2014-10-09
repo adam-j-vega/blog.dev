@@ -17,8 +17,11 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
+		Session::put('foo', 'bar');
+
 		return View::make('hello');
 	}
+
 }
 
 
