@@ -1,5 +1,5 @@
 
-@extends('layouts.portfolioTemplate')
+@extends('layouts.portfolio_template')
 
 
 
