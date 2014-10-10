@@ -12,7 +12,7 @@ class CreatePostsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('post', function(Blueprint $table)
+		Schema::create('posts', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('title', 255);
@@ -28,7 +28,8 @@ class CreatePostsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('post');
+		Schema::drop('posts');
 	}
 
 }
+?>
