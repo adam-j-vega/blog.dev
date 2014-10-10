@@ -7,6 +7,15 @@ class PostsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+	
+	public function __construct()
+	{
+	    // call base controller constructor
+	    parent::__construct();
+
+	    // run auth filter before all methods on this controller except index and show
+	    $this->beforeFilter('auth.basic', array('except' => array('index', 'show')));
+	}
 
 	public function index()
 	{
@@ -50,6 +59,11 @@ class PostsController extends \BaseController {
 	public function show($id)
 	{
 		$post = Post::find($id);
+
+		if(!$post){
+			App::abort(404);
+		}
+
 		return View::make('posts.show')->with('post', $post);
 	}
 
@@ -86,15 +100,24 @@ class PostsController extends \BaseController {
 
 			Session::flash('errorMessage', 'Your post must have a title and content');
 
+			Log::error('Post validator failed', Input::all());
+
 			return Redirect::back()->withInput();
+
 			// ->withErrors($validator));
 		} else {
+
 			$post->title = Input::get('title');
 			$post->content = Input::get('content');
+
 			$post->save();
 	
-			$message = 'Post created successfully';
+			$message = 'Post was successfully saved';
+
 			Session::flash('successMessage', $message);
+
+			Log::info('Post was successfully saved', Input::all());
+
 			return Redirect::action('PostsController@show',$post->id);
 
 		}
@@ -107,8 +130,17 @@ class PostsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		Post::find($id);
-		Post::delete();
+		$post = Post::find($id);
+		if(!$post){
+			App::abort(404);
+		}
+		$post->delete();
+
+		Session::flash('successMessage', 'Post was successfully deleted');
+
+		Log::info('Post was deleted successfully');
+
+		return Redirect::action('PostsController@index');
 	}
 
 }

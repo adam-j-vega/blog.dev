@@ -1,6 +1,6 @@
 <?php
-
-class Post extends Eloquent
+use Carbon\Carbon;
+class Post extends BaseModel
 {
 	const DATE_FORMAT = 'l F jS Y @ g:i a';
 	public static $rules = array(

@@ -4,7 +4,9 @@
 
 @foreach($posts as $post)
 		<h1><a href="{{{ action('PostsController@show', $post->id) }}}">{{{$post->title}}}</a></h1>
-		<small>{{{$post->created_at->format(Post::DATE_FORMAT)}}}</small>
+		<small>Created on {{{$post->created_at->format(Post::DATE_FORMAT)}}}</small>
+		<br>
+		<small>Updated on {{{$post->updated_at->format(Post::DATE_FORMAT)}}}</small>
 		<p>{{{$post->content}}}</p>
 		<br>
 

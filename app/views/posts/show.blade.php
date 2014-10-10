@@ -14,4 +14,5 @@
 	<a href="{{{ action('PostsController@index') }}}">Index</a>
 </div>
 
+
 @stop

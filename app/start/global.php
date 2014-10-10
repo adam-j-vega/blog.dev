@@ -79,3 +79,11 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+//custom 404 page to show on App::abort(404)
+
+App::missing(function($exception)
+{
+	Log::error('User encountered a 404 page not found error');
+	return Response::view('errors.missing', array(), 404);
+});
