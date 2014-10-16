@@ -14,13 +14,20 @@ class PostsController extends \BaseController {
 	    parent::__construct();
 
 	    // run auth filter before all methods on this controller except index and show
-	    $this->beforeFilter('auth.basic', array('except' => array('index', 'show')));
+	    $this->beforeFilter('auth', array('except' => array('index', 'show')));
 	}
 
 	public function index()
-	{
+	{	
+		$search = Input::get('search');
 
-		$posts = Post::paginate(4);
+		$query = Post::with('user');
+
+		$query->where('title', 'like', "%$search%");
+
+		$query->orWhere('content', 'like', "%$search%");
+
+		$posts = $query->orderBy('created_at', 'desc')->paginate(4);
 
 		return View::make('posts.index')->with('posts', $posts);
 	}
@@ -45,6 +52,9 @@ class PostsController extends \BaseController {
 	public function store()
 	{
 		$post = new Post();
+
+		
+
 		return $this->savePost($post);
 	}
 
@@ -59,14 +69,15 @@ class PostsController extends \BaseController {
 	public function show($id)
 	{
 		$post = Post::find($id);
+		$user_id = $post->user_id;
+		$user = User::find($user_id);
 
 		if(!$post){
 			App::abort(404);
 		}
 
-		return View::make('posts.show')->with('post', $post);
+		return View::make('posts.show')->with('post', $post)->with('user', $user);
 	}
-
 	/**
 	 * Show the form for editing the specified resource.
 	 *
@@ -109,6 +120,17 @@ class PostsController extends \BaseController {
 
 			$post->title = Input::get('title');
 			$post->content = Input::get('content');
+
+			$post->user_id = Auth::id();
+
+
+			if(Input::hasFile('image')) {
+				$file = Input::file('image');
+				$destination_path = public_path() . '/img/';
+				$filename = str_random(6) . '_' . $file->getClientOriginalName();
+				$uploadSuccess = $file->move($destination_path, $filename);
+				$post->image_name = '/img/' . $filename;
+			}
 
 			$post->save();
 	

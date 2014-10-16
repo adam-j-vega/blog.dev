@@ -21,7 +21,28 @@ class HomeController extends BaseController {
 
 		return View::make('hello');
 	}
-
+	public function showLogin()
+	{
+		return View::make('login');
+	}
+	public function doLogin()
+	{
+		$credentials = [
+			'email' => Input::get('email'),
+			'password' => Input::get('password')
+			];
+		$valid = Auth::attempt($credentials);
+			if ($valid) {
+				return Redirect::intended('posts.index');
+			}else{
+				return Redirect::back()->withInput();
+			}
+		}
+	public function doLogout()
+	{
+		Auth::logout();
+		return Redirect::action('PostsController@index');
+	}
 }
 
 

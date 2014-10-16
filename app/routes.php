@@ -46,3 +46,9 @@ Route::get('/orm-test', function ()
 });
 
 Route::resource('/posts', 'PostsController');
+
+Route::get('/login', 'HomeController@showLogin');
+
+Route::post('/login', 'HomeController@doLogin');
+
+Route::get('/logout', 'HomeController@doLogout');

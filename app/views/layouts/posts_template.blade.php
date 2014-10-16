@@ -6,6 +6,16 @@
 </head>
 <body>
 
+	<nav>
+		<ul>
+			@if(!Auth::user())
+				<li><a href="{{ URL::to('/login') }}">Login</a></li>
+			@else
+				<li><a href="{{ URL::to('/logout') }}">Logout</a></li>
+			@endif
+		</ul>
+	</nav>
+
 	@if (Session::has('successMessage'))
     	<div class="alert alert-success">{{{ Session::get('successMessage') }}}</div>
 	@endif

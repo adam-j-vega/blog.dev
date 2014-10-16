@@ -8,6 +8,12 @@ class Post extends BaseModel
 		'content' => 'required'
 	);
 	protected $table = 'posts';
+
+	protected $image_name;
+
+	public function user()
+	{
+	    return $this->belongsTo('User');
+	}
 }
 
-?>
